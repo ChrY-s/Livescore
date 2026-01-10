@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Partite</title>
+</head>
+<body>
+    <h2>Partite terminate:</h2>
+    <ul id="ended">
+    </ul>
+
+    <h2>Partite programmate:</h2>
+    <ul id="programmed">
+    </ul>
+
+    <h2>Partite in corso:</h2>
+    <ul id="current">
+    </ul>
+
+<script>
+    // Funzione che mi porta alla pagina dei dettagli
+    function showDetails(){
+        window.location.href = '/details';
+    }
+
+    const ws = new WebSocket("ws://localhost:8888/ws");
+
+    // Liste delle partite
+    const finished_matches = document.getElementById("ended")
+    const programmed_matches = document.getElementById("programmed")
+    const current_matches = document.getElementById("current")
+
+    ws.onopen = () => {
+        console.log("WebSocket aperto");
+    };
+
+    ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+
+        // Dati sulle partite
+        const live_matches = msg.live;
+        const end_matches = msg.end;
+        const start_matches = msg.start;
+
+        // Pulisco le liste
+        current_matches.innerHTML = "";
+        finished_matches.innerHTML = "";
+        programmed_matches.innerHTML = "";
+
+        // Inserisco i dati
+        // Partite Live
+        live_matches.forEach(match => {
+            // Converto gli eventi in stringhe per essere visualizzabili
+            let eventList = "";
+            for (const event of match.events) {
+                eventList += `Evento: ${event.type}
+                              Minutaggio: ${event.time}`;
+            }
+
+            // Crea un nuovo elemento <li>
+            const listItem = document.createElement('li');
+
+            // Imposta il testo dell'elemento <li> con il valore dall'array
+            listItem.textContent = `${match.teams[0]["team_name"]} / ${match.teams[1]["team_name"]}
+                                    Tempo: ${match.time} minuti
+                                    Punteggio: ${match.scores[0]} - ${match.scores[1]}
+                                    Momenti salienti: ${eventList}`;
+
+            // Aggiungo il pulsante per visualizzare i dettagli
+            const detailButton = document.createElement('button');
+            detailButton.textContent = 'Mostra dettagli';
+            detailButton.addEventListener('click', showDetails);
+
+            listItem.appendChild(detailButton);
+
+            // Aggiungi il nuovo <li> alla <ul>
+            current_matches.appendChild(listItem);
+        });
+
+        // Partite concluse
+        end_matches.forEach(match => {
+            // Converto gli eventi in stringhe per essere visualizzabili
+            let eventList = "";
+            for (const event of match.events) {
+                eventList += `Evento: ${event.type}
+                              Minutaggio: ${event.time}`;
+            }
+
+            // Crea un nuovo elemento <li>
+            const listItem = document.createElement('li');
+
+            // Imposta il testo dell'elemento <li> con il valore dall'array
+            listItem.textContent = `${match.teams[0]["team_name"]} / ${match.teams[1]["team_name"]}
+                                    Esito: ${match.scores}
+                                    Momenti salienti: ${eventList}`;
+
+            // Aggiungi il nuovo <li> alla <ul>
+            finished_matches.appendChild(listItem);
+        });
+
+        // Partite programmate
+        start_matches.forEach(match => {
+            // Crea un nuovo elemento <li>
+            const listItem = document.createElement('li');
+
+            // Imposta il testo dell'elemento <li> con il valore dall'array
+            listItem.textContent = `${match.teams[0]["team_name"]} / ${match.teams[1]["team_name"]}
+                                    programmata per: ${match.schedule.slice(0, 19)}`;
+
+            // Aggiungi il nuovo <li> alla <ul>
+            programmed_matches.appendChild(listItem);
+        });
+    };
+
+    ws.onclose = () => {
+        console.log("WebSocket chiuso");
+    };
+
+</script>
+
+</body>
+</html>
