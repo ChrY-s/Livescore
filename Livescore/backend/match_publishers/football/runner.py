@@ -1,22 +1,23 @@
 import asyncio
 from Livescore.backend.match_publishers.football.football_pub import FootballMatch
 
-from Livescore.backend.match_publishers.football.init import change_availability
+from Livescore.backend.match_publishers.football.init import change_availability, reset_disp
 
-from Livescore.backend.database import team_data
+from Livescore.backend.database import open_teams
 
 # Numero match da avviare
-stadiums = 3
+stadiums = 2
 
 # Lista match
 match_list = []
 
+# Dati sui team
+team_data = open_teams()
+
 # Funzione che avvia i generatori di partite
 # s = numero partite inizializzate contemporaneamente
 async def run_matches(s):
-    for t in team_data:
-        # Rendo tutti i team disponibili per una partita
-        change_availability(t["team_name"], "y")
+    reset_disp()
 
     # Avvio le partite
     for _ in range(s):

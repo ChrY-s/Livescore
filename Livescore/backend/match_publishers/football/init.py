@@ -2,7 +2,10 @@ import random
 import datetime as timeInfo
 import json
 
-from Livescore.backend.database import team_data
+from Livescore.backend.database import open_teams
+
+# Dati sui team
+team_data = open_teams()
 
 # Variabili di controllo ritardi sulla pianificazione delle partite
 # 0 = tempo corrente
@@ -50,6 +53,7 @@ def choose_teams():
             change_availability(possible_team["team_name"], "n")
             team_1 = possible_team
 
+
     while not team_2:
         possible_team = rnd.choice(team_data)
 
@@ -59,34 +63,50 @@ def choose_teams():
             change_availability(possible_team["team_name"], "n")
             team_2 = possible_team
 
+    #for t in team_data:
+    #    print(f'{t["team_name"]}: {t["available"]}')
+
     return team_1, team_2
 
 
 # Funzione che cambia la disponibilità di una squadra
 def change_availability(team_name, change_to):
-    # File di dati sulle squadre
-    with open("../../teams/football.json") as f:
-        team_data = json.loads(f.read())
+    # Cerco la squadra desiderata
+    for t in team_data:
+        if t["team_name"] == team_name:
 
-        # Cerco la squadra desiderata
-        for t in team_data:
-            if t["team_name"] == team_name:
+            # Faccio una copia della squadra e rimuovo quella vecchia
+            copy = t
+            team_data.remove(t)
 
-                # Faccio una copia della squadra e rimuovo quella vecchia
-                copy = t
-                team_data.remove(t)
+            # Cambio la disponibilità
+            if change_to == "n":
+                copy["available"] = "n"
+            elif change_to == "y":
+                copy["available"] = "y"
 
-                # Cambio la disponibilità
-                if change_to == "n":
-                    copy["available"] = "n"
-                elif change_to == "y":
-                    copy["available"] = "y"
+            # Appendo la copia modificata
+            team_data.append(copy)
 
-                # Appendo la copia modificata
-                team_data.append(copy)
-
-                break
+            break
 
     # Modifico il file json
     with open("../../teams/football.json", "w") as f:
         f.write(json.dumps(team_data))
+
+
+# Funzione che riporta tutti i team a disponibile
+def reset_disp():
+    # Lista nomi team
+    teams = []
+    for t in team_data:
+        teams.append(t['team_name'])
+
+    for t in teams:
+        # Rendo tutti i team disponibili per una partita
+        change_availability(t, "y")
+
+
+if __name__ == '__main__':
+    reset_disp()
+    choose_teams()

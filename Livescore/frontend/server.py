@@ -1,12 +1,7 @@
 import tornado.websocket
 import asyncio
 
-from Livescore.backend.match_updater import match_updater
-
-# stadiums = numero partite inizializzate contemporaneamente
-stadiums = 2
-
-clients = set()
+from Livescore.backend.match_updater import match_updater, clients
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -48,9 +43,6 @@ async def main():
 
     # Faccio partire l'updater
     asyncio.create_task(match_updater())
-
-    # Avvio i publisher delle partite
-    # asyncio.create_task(run_matches(stadiums))
 
     await asyncio.Event().wait()
 

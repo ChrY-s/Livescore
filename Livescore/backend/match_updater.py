@@ -1,7 +1,8 @@
 import json
 
 from Livescore.backend.database import running_matches, scheduled_matches, ended_matches
-from Livescore.frontend.server import clients
+
+clients = set()
 
 
 # Funzione che trova tutti gli elementi di una collezione e li trasforma in una lista

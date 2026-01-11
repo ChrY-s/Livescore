@@ -6,7 +6,17 @@ async def create_match(self):
 
     # Inserisco il match tra i programmati
     await scheduled_matches.insert_one({
-        "id": self.__class__.match_id,
+        "id": self.id,
+        "sport": "calcio",
+        "teams": [self.team_1["team_name"], self.team_2["team_name"]],
+        "time": self.match_time,
+        "scores": self.match_scores,
+        "events": self.match_events,
+        "schedule": self.match_schedule
+    })
+
+    print({
+        "id": self.id,
         "sport": "calcio",
         "teams": [self.team_1["team_name"], self.team_2["team_name"]],
         "time": self.match_time,

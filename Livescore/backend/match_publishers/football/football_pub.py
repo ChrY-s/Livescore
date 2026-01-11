@@ -56,6 +56,7 @@ class FootballMatch:
                 started = True
 
                 start_match = await scheduled_matches.find_one({"id": self.id})
+
                 await scheduled_matches.delete_one(start_match)
                 await running_matches.insert_one(start_match)
 

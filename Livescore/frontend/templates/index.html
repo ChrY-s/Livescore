@@ -50,18 +50,20 @@
         // Inserisco i dati
         // Partite Live
         live_matches.forEach(match => {
+            console.log(match);
+
             // Converto gli eventi in stringhe per essere visualizzabili
             let eventList = "";
             for (const event of match.events) {
                 eventList += `Evento: ${event.type}
-                              Minutaggio: ${event.time}`;
+                              Minutaggio: ${event.time} `;
             }
 
             // Crea un nuovo elemento <li>
             const listItem = document.createElement('li');
 
             // Imposta il testo dell'elemento <li> con il valore dall'array
-            listItem.textContent = `${match.teams[0]["team_name"]} / ${match.teams[1]["team_name"]}
+            listItem.textContent = `${match.teams[0]} / ${match.teams[1]}
                                     Tempo: ${match.time} minuti
                                     Punteggio: ${match.scores[0]} - ${match.scores[1]}
                                     Momenti salienti: ${eventList}`;
@@ -83,14 +85,14 @@
             let eventList = "";
             for (const event of match.events) {
                 eventList += `Evento: ${event.type}
-                              Minutaggio: ${event.time}`;
+                              Minutaggio: ${event.time} `;
             }
 
             // Crea un nuovo elemento <li>
             const listItem = document.createElement('li');
 
             // Imposta il testo dell'elemento <li> con il valore dall'array
-            listItem.textContent = `${match.teams[0]["team_name"]} / ${match.teams[1]["team_name"]}
+            listItem.textContent = `${match.teams[0]} / ${match.teams[1]}
                                     Esito: ${match.scores}
                                     Momenti salienti: ${eventList}`;
 
@@ -104,7 +106,7 @@
             const listItem = document.createElement('li');
 
             // Imposta il testo dell'elemento <li> con il valore dall'array
-            listItem.textContent = `${match.teams[0]["team_name"]} / ${match.teams[1]["team_name"]}
+            listItem.textContent = `${match.teams[0]} / ${match.teams[1]}
                                     programmata per: ${match.schedule.slice(0, 19)}`;
 
             // Aggiungi il nuovo <li> alla <ul>
