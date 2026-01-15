@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Partite</title>
+</head>
+<body>
+    <h2>Partite terminate:</h2>
+    <ul id="ended"></ul>
+
+    <h2>Partite programmate:</h2>
+    <ul id="programmed"></ul>
+
+    <h2>Partite in corso:</h2>
+    <ul id="current"></ul>
+
+<script>
+    const ws = new WebSocket("ws://localhost:8888/ws");
+
+    window.addEventListener("beforeunload", () => {
+        ws.close();
+    });
+
+    const finished_matches = document.getElementById("ended");
+    const programmed_matches = document.getElementById("programmed");
+    const current_matches = document.getElementById("current");
+
+    ws.onopen = () => {
+        console.log("WebSocket aperto");
+    };
+
+    ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+
+        const live_matches = msg.live;
+        const end_matches = msg.end;
+        const start_matches = msg.start;
+
+        // Pulisco le liste
+        current_matches.innerHTML = "";
+        finished_matches.innerHTML = "";
+        programmed_matches.innerHTML = "";
+
+        // --------------------
+        // Partite Live
+        // --------------------
+        live_matches.forEach(match => {
+            // Converto eventi in <ul>
+            const eventsUl = document.createElement('ul');
+            match.events.forEach(ev => {
+                const li = document.createElement('li');
+                li.textContent = `Evento: ${ev.type} - Minutaggio: ${ev.time}`;
+                eventsUl.appendChild(li);
+            });
+
+            // Creo <li> principale
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                ${match.teams[0]} / ${match.teams[1]}<br>
+                Tempo: ${match.time} minuti<br>
+                Punteggio: ${match.scores[0]} - ${match.scores[1]}<br>
+                Momenti salienti:
+            `;
+            listItem.appendChild(eventsUl);
+
+            // Pulsante “Mostra dettagli”
+            const detailButton = document.createElement('button');
+            detailButton.textContent = 'Mostra dettagli';
+            ((id) => {
+                detailButton.addEventListener('click', () => {
+                    window.location.href = `/details/${encodeURIComponent(id)}`;
+                });
+            })(match.id);
+
+            listItem.appendChild(document.createElement('br'));
+            listItem.appendChild(detailButton);
+
+            current_matches.appendChild(listItem);
+        });
+
+        // --------------------
+        // Partite concluse
+        // --------------------
+        end_matches.forEach(match => {
+            const eventsUl = document.createElement('ul');
+            match.events.forEach(ev => {
+                const li = document.createElement('li');
+                li.textContent = `Evento: ${ev.type} - Minutaggio: ${ev.time}`;
+                eventsUl.appendChild(li);
+            });
+
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                ${match.teams[0]} / ${match.teams[1]}<br>
+                Esito: ${match.scores}<br>
+                Momenti salienti:
+            `;
+            listItem.appendChild(eventsUl);
+            finished_matches.appendChild(listItem);
+        });
+
+        // --------------------
+        // Partite programmate
+        // --------------------
+        start_matches.forEach(match => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${match.teams[0]} / ${match.teams[1]} - programmata per: ${match.schedule.slice(0,19)}`;
+            programmed_matches.appendChild(listItem);
+        });
+    };
+
+    ws.onclose = () => {
+        console.log("WebSocket chiuso");
+    };
+</script>
+
+</body>
+</html>

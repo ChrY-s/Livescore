@@ -5,6 +5,80 @@
     <title>Dettagli partita</title>
 </head>
 <body>
-    <h2>Dettagli:</h2>
+
+    <h2 id="match"></h2>
+
+    <h2>Punteggio: </h2> <p id="scores"></p>
+
+    <h2>Eventi salienti: </h2>
+    <ul id="events"></ul>
+
+    <a href="http://localhost:8888">Torna alla schermata principale</a>
+
+<script>
+    const ws = new WebSocket("ws://localhost:8888/ws");
+
+    const matchId = Number("{{ id }}");
+
+    const match_vs = document.getElementById("match")
+    const match_sc = document.getElementById("scores")
+    const match_ev = document.getElementById("events")
+
+
+    ws.onopen = () => {
+        console.log("WebSocket aperto");
+    };
+
+    ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+
+        // Svuoto i dati gia presenti
+        match_vs.innerHTML = "";
+        match_sc.innerHTML = "";
+        match_ev.innerHTML = "";
+
+        // Dati sulle partite
+        const live_matches = msg.live;
+
+        // Inserisco i dati
+        // Partite Live
+        live_matches.forEach(match => {
+            console.log(match);
+
+            // Se la partita è giusta
+            if (match.id == matchId) {
+
+                // Prendo il nome delle squadre
+                match_vs.textContent = `${match.teams[0]} / ${match.teams[1]}`;
+
+                // Cambio i punti
+                match_sc.textContent = `${match.scores[0]} - ${match.scores[1]}`;
+
+                // Converto gli eventi in stringhe per essere visualizzabili
+                let eventList = "";
+                for (const event of match.events) {
+                    eventList += `Evento: ${event.type}
+                                  Minutaggio: ${event.time}
+                                  Dettagli: ${event.details}`;
+                }
+
+                // Crea un nuovo elemento <li>
+                const listItem = document.createElement('li');
+
+                // Imposta il testo dell'elemento <li> con il valore dall'array
+                listItem.textContent = `Momenti salienti: ${eventList}`;
+
+                match_ev.append(listItem);
+            }
+
+        });
+    };
+
+    ws.onclose = () => {
+        console.log("WebSocket chiuso");
+    };
+
+</script>
+
 </body>
 </html>

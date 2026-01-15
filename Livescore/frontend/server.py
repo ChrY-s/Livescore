@@ -10,8 +10,9 @@ class MainHandler(tornado.web.RequestHandler):
 
 
 class DetailHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render("details.html")
+    def get(self, match_id):
+        print("Richiesta reinderizzamento")
+        self.render("details.html", id = match_id)
 
 
 class WSHandler(tornado.websocket.WebSocketHandler):
@@ -33,7 +34,7 @@ async def main():
         [
             (r"/", MainHandler),
             (r"/ws", WSHandler),
-            (r"/details", DetailHandler)
+            (r"/details/([0-9]+)", DetailHandler)
         ],
         template_path="templates",
     )

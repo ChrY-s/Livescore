@@ -18,12 +18,11 @@
     </ul>
 
 <script>
-    // Funzione che mi porta alla pagina dei dettagli
-    function showDetails(){
-        window.location.href = '/details';
-    }
-
     const ws = new WebSocket("ws://localhost:8888/ws");
+
+    window.addEventListener("beforeunload", () => {
+        ws.close();
+    });
 
     // Liste delle partite
     const finished_matches = document.getElementById("ended")
@@ -71,7 +70,10 @@
             // Aggiungo il pulsante per visualizzare i dettagli
             const detailButton = document.createElement('button');
             detailButton.textContent = 'Mostra dettagli';
-            detailButton.addEventListener('click', showDetails);
+            detailButton.addEventListener('click', function () {
+                window.location.href = `/details/${match.id}`;
+            });
+
 
             listItem.appendChild(detailButton);
 
