@@ -30,7 +30,7 @@ def goal(self):
 
     self.match_events.append({"type": "goal",
                               "time": self.match_time,
-                              "details": f'{team["team_name"]} ha fatto goal grazie a {player["surname"]} ({player["number"]}) '
+                              "details": f'⚽ {team["team_name"]} ha fatto goal grazie a {player["surname"]} ({player["number"]}) '
                                          f'Punteggio parziale: {self.match_scores}'})
 
 
@@ -55,5 +55,5 @@ def foul(self):
 
     self.match_events.append({"type": "foul",
                               "time": self.match_time,
-                              "details": f'{bad_team["team_name"]} ha fatto fallo, '
+                              "details": f'🟥 {bad_team["team_name"]} ha fatto fallo, '
                                          f'{bad["surname"]} su {sad["surname"]} '})

@@ -1,4 +1,5 @@
-from Livescore.backend.database import running_matches, scheduled_matches, ended_matches
+from Livescore.backend.database import running_matches, scheduled_matches
+
 
 # -------- INTERAZIONI COL DB --------
 # Funzione che inserisce il match dentro il DB

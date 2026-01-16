@@ -49,6 +49,7 @@ class FootballMatch:
         while True:
             # Controllo il match debba iniziare
             if timeInfo.datetime.now() < self.match_schedule:
+                await asyncio.sleep(1)
                 continue
 
             # Se il match inizia lo sposto nei match in corso

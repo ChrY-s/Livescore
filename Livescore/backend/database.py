@@ -13,7 +13,7 @@ scheduled_matches = db["scheduled"]
 def open_teams(p = "../../teams/football.json"):
     global team_data
 
-    # File di dati sulle squadre                                      ------- DA METTERE NEL DB ------
+    # File di dati sulle squadre
     with open(p) as f:
         return json.loads(f.read())
 

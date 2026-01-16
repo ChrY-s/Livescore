@@ -5,8 +5,7 @@
     <title>Dettagli partita</title>
 </head>
 <body>
-
-    <h2 id="match"></h2>
+    <h2 id="match"></h2> <h3 id="ora"></h3>
 
     <h2>Punteggio: </h2> <p id="scores"></p>
 
@@ -18,8 +17,9 @@
 <script>
     const ws = new WebSocket("ws://localhost:8888/ws");
 
-    const matchId = Number("{{ id }}");
+    const matchId = {{ id }};
 
+    const match_tm = document.getElementById("ora")
     const match_vs = document.getElementById("match")
     const match_sc = document.getElementById("scores")
     const match_ev = document.getElementById("events")
@@ -36,6 +36,7 @@
         match_vs.innerHTML = "";
         match_sc.innerHTML = "";
         match_ev.innerHTML = "";
+        match_tm.innerHTML = "";
 
         // Dati sulle partite
         const live_matches = msg.live;
@@ -47,9 +48,11 @@
 
             // Se la partita è giusta
             if (match.id == matchId) {
+                // Metto il tempo di gioco
+                match.tm.textContent = `Tempo di gioco: ${match.time} ⏱`;
 
                 // Prendo il nome delle squadre
-                match_vs.textContent = `${match.teams[0]} / ${match.teams[1]}`;
+                match_vs.textContent = `${match.teams[0]} / ${match.teams[1]} ▶️`;
 
                 // Cambio i punti
                 match_sc.textContent = `${match.scores[0]} - ${match.scores[1]}`;
@@ -66,7 +69,7 @@
                 const listItem = document.createElement('li');
 
                 // Imposta il testo dell'elemento <li> con il valore dall'array
-                listItem.textContent = `Momenti salienti: ${eventList}`;
+                listItem.textContent = `${eventList}`;
 
                 match_ev.append(listItem);
             }

@@ -5,14 +5,12 @@ from Livescore.backend.match_updater import match_updater, clients
 
 
 class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render("index.html")
+    def get(self, match_id = 0):
+        if match_id == 0:
+            self.render("index.html")
+        else:
+            self.render("details.html", id = match_id)
 
-
-class DetailHandler(tornado.web.RequestHandler):
-    def get(self, match_id):
-        print("Richiesta reinderizzamento")
-        self.render("details.html", id = match_id)
 
 
 class WSHandler(tornado.websocket.WebSocketHandler):
@@ -33,8 +31,8 @@ async def main():
     app = tornado.web.Application(
         [
             (r"/", MainHandler),
+            (r"/([0-9]+)", MainHandler),
             (r"/ws", WSHandler),
-            (r"/details/([0-9]+)", DetailHandler)
         ],
         template_path="templates",
     )

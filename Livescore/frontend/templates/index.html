@@ -5,15 +5,17 @@
     <title>Partite</title>
 </head>
 <body>
-    <h2>Partite terminate:</h2>
+    <h1>PARTITE DI CALCO</h1>
+
+    <h2>⏹️ Partite terminate:</h2>
     <ul id="ended">
     </ul>
 
-    <h2>Partite programmate:</h2>
+    <h2>⏰ Partite programmate:</h2>
     <ul id="programmed">
     </ul>
 
-    <h2>Partite in corso:</h2>
+    <h2>▶️ Partite in corso:</h2>
     <ul id="current">
     </ul>
 
@@ -65,13 +67,13 @@
             listItem.textContent = `${match.teams[0]} / ${match.teams[1]}
                                     Tempo: ${match.time} minuti
                                     Punteggio: ${match.scores[0]} - ${match.scores[1]}
-                                    Momenti salienti: ${eventList}`;
+                                    Momenti salienti 🔥: ${eventList}`;
 
             // Aggiungo il pulsante per visualizzare i dettagli
             const detailButton = document.createElement('button');
             detailButton.textContent = 'Mostra dettagli';
             detailButton.addEventListener('click', function () {
-                window.location.href = `/details/${match.id}`;
+                window.location.href = "http://localhost:8888/" + match.id;
             });
 
 

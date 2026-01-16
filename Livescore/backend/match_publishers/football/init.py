@@ -12,8 +12,8 @@ team_data = open_teams()
 # n = delay massimo
 days_delay = 0
 hour_delay = 0
-minute_delay = 0
-second_delay = 0
+minute_delay = 3
+second_delay = 30
 
 
 # -------- INIZIALIZZAZIONI --------

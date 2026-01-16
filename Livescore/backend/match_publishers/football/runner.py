@@ -1,7 +1,7 @@
 import asyncio
 from Livescore.backend.match_publishers.football.football_pub import FootballMatch
 
-from Livescore.backend.match_publishers.football.init import change_availability, reset_disp
+from Livescore.backend.match_publishers.football.init import reset_disp
 
 from Livescore.backend.database import open_teams
 
