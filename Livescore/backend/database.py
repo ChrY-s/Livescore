@@ -10,7 +10,7 @@ running_matches = db["running"]
 ended_matches = db["ended"]
 scheduled_matches = db["scheduled"]
 
-def open_teams(p = "../../teams/football.json"):
+def open_teams(p = "backend/teams/football.json"):
     global team_data
 
     # File di dati sulle squadre

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Partite</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>PARTITE DI CALCO</h1>
@@ -56,24 +57,24 @@
             // Converto gli eventi in stringhe per essere visualizzabili
             let eventList = "";
             for (const event of match.events) {
-                eventList += `Evento: ${event.type}
-                              Minutaggio: ${event.time} `;
+                eventList += `<br> - Evento: ${event.type}
+                              Minutaggio: ${event.time}`;
             }
 
             // Crea un nuovo elemento <li>
             const listItem = document.createElement('li');
 
             // Imposta il testo dell'elemento <li> con il valore dall'array
-            listItem.textContent = `${match.teams[0]} / ${match.teams[1]}
-                                    Tempo: ${match.time} minuti
-                                    Punteggio: ${match.scores[0]} - ${match.scores[1]}
-                                    Momenti salienti 🔥: ${eventList}`;
+            listItem.innerHTML = `${match.teams[0]} / ${match.teams[1]} <br>
+                                    Tempo: ${match.time} minuti <br>
+                                    Punteggio: ${match.scores[0]} - ${match.scores[1]} <br>
+                                    Momenti salienti 🔥: ${eventList} `;
 
             // Aggiungo il pulsante per visualizzare i dettagli
             const detailButton = document.createElement('button');
-            detailButton.textContent = 'Mostra dettagli';
+            detailButton.innerHTML = 'Mostra dettagli';
             detailButton.addEventListener('click', function () {
-                window.location.href = "http://localhost:8888/" + match.id;
+                window.location.href = `http://localhost:8888/${match.id}`;
             });
 
 
@@ -88,7 +89,7 @@
             // Converto gli eventi in stringhe per essere visualizzabili
             let eventList = "";
             for (const event of match.events) {
-                eventList += `Evento: ${event.type}
+                eventList += `<br> - Evento: ${event.type}
                               Minutaggio: ${event.time} `;
             }
 
@@ -96,9 +97,9 @@
             const listItem = document.createElement('li');
 
             // Imposta il testo dell'elemento <li> con il valore dall'array
-            listItem.textContent = `${match.teams[0]} / ${match.teams[1]}
-                                    Esito: ${match.scores}
-                                    Momenti salienti: ${eventList}`;
+            listItem.innerHTML = `${match.teams[0]} / ${match.teams[1]} <br>
+                                    Esito: ${match.scores[0]} - ${match.scores[1]} <br>
+                                    Momenti salienti: ${eventList} `;
 
             // Aggiungi il nuovo <li> alla <ul>
             finished_matches.appendChild(listItem);
@@ -110,7 +111,7 @@
             const listItem = document.createElement('li');
 
             // Imposta il testo dell'elemento <li> con il valore dall'array
-            listItem.textContent = `${match.teams[0]} / ${match.teams[1]}
+            listItem.innerHTML = `${match.teams[0]} / ${match.teams[1]}
                                     programmata per: ${match.schedule.slice(0, 19)}`;
 
             // Aggiungi il nuovo <li> alla <ul>

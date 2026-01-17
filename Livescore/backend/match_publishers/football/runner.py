@@ -6,7 +6,7 @@ from Livescore.backend.match_publishers.football.init import reset_disp
 from Livescore.backend.database import open_teams
 
 # Numero match da avviare
-stadiums = 2
+stadiums = 5
 
 # Lista match
 match_list = []
@@ -22,13 +22,14 @@ async def run_matches(s):
     # Avvio le partite
     for _ in range(s):
         m = asyncio.create_task(FootballMatch().run())
-
         match_list.append(m)
 
 
+
 async def main():
-    await run_matches(stadiums)
-    await asyncio.gather(*match_list)
+    while True:
+        await run_matches(stadiums)
+        await asyncio.gather(*match_list)
 
 
 if __name__ == '__main__':

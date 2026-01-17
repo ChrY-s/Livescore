@@ -10,9 +10,9 @@ team_data = open_teams()
 # Variabili di controllo ritardi sulla pianificazione delle partite
 # 0 = tempo corrente
 # n = delay massimo
-days_delay = 0
-hour_delay = 0
-minute_delay = 3
+days_delay = 1
+hour_delay = 2
+minute_delay = 10
 second_delay = 30
 
 
@@ -91,7 +91,7 @@ def change_availability(team_name, change_to):
             break
 
     # Modifico il file json
-    with open("../../teams/football.json", "w") as f:
+    with open("backend/teams/football.json", "w") as f:
         f.write(json.dumps(team_data))
 
 
@@ -109,4 +109,5 @@ def reset_disp():
 
 if __name__ == '__main__':
     reset_disp()
-    choose_teams()
+    for _ in range(5):
+        print(choose_teams())

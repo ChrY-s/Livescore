@@ -1,4 +1,4 @@
-import json
+import json, asyncio
 
 from Livescore.backend.database import running_matches, scheduled_matches, ended_matches
 
@@ -38,3 +38,5 @@ async def match_updater():
         # inoltro i dati ai client WebSocket
         for c in list(clients):
             await c.write_message(match_data)
+
+        await asyncio.sleep(1)

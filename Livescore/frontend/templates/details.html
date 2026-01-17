@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Dettagli partita</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2 id="match"></h2> <h3 id="ora"></h3>
@@ -49,27 +50,27 @@
             // Se la partita è giusta
             if (match.id == matchId) {
                 // Metto il tempo di gioco
-                match.tm.textContent = `Tempo di gioco: ${match.time} ⏱`;
+                match_tm.innerHTML = `Tempo di gioco: ${match.time} ⏱`;
 
                 // Prendo il nome delle squadre
-                match_vs.textContent = `${match.teams[0]} / ${match.teams[1]} ▶️`;
+                match_vs.innerHTML = `${match.teams[0]} / ${match.teams[1]} ▶️`;
 
                 // Cambio i punti
-                match_sc.textContent = `${match.scores[0]} - ${match.scores[1]}`;
+                match_sc.innerHTML = `${match.scores[0]} - ${match.scores[1]}`;
 
                 // Converto gli eventi in stringhe per essere visualizzabili
                 let eventList = "";
                 for (const event of match.events) {
-                    eventList += `Evento: ${event.type}
+                    eventList += `- Evento: ${event.type} =>
                                   Minutaggio: ${event.time}
-                                  Dettagli: ${event.details}`;
+                                  Dettagli: ${event.details} <br>`;
                 }
 
                 // Crea un nuovo elemento <li>
                 const listItem = document.createElement('li');
 
                 // Imposta il testo dell'elemento <li> con il valore dall'array
-                listItem.textContent = `${eventList}`;
+                listItem.innerHTML = `${eventList}`;
 
                 match_ev.append(listItem);
             }
