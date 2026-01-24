@@ -1,9 +1,9 @@
 import asyncio
-from Livescore.backend.match_publishers.football.football_pub import FootballMatch
+from backend.match_publishers.football.football_pub import FootballMatch
 
-from Livescore.backend.match_publishers.football.init import reset_disp
+from backend.match_publishers.football.init import reset_disp
 
-from Livescore.backend.database import open_teams
+from backend.database import open_teams
 
 # Numero match da avviare
 stadiums = 5

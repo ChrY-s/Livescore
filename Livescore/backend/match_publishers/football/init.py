@@ -2,7 +2,7 @@ import random
 import datetime as timeInfo
 import json
 
-from Livescore.backend.database import open_teams
+from backend.database import open_teams
 
 # Dati sui team
 team_data = open_teams()
@@ -10,9 +10,9 @@ team_data = open_teams()
 # Variabili di controllo ritardi sulla pianificazione delle partite
 # 0 = tempo corrente
 # n = delay massimo
-days_delay = 1
-hour_delay = 2
-minute_delay = 10
+days_delay = 0
+hour_delay = 0
+minute_delay = 2
 second_delay = 30
 
 

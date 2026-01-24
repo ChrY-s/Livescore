@@ -1,6 +1,6 @@
 import json, asyncio
 
-from Livescore.backend.database import running_matches, scheduled_matches, ended_matches
+from backend.database import running_matches, scheduled_matches, ended_matches
 
 clients = set()
 

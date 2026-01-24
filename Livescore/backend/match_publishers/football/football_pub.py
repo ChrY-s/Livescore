@@ -2,11 +2,11 @@ import random
 import datetime as timeInfo
 import asyncio
 
-from Livescore.backend.database import running_matches, scheduled_matches, ended_matches
-from Livescore.backend.match_publishers.football.init import schedule_match, choose_teams, change_availability
+from backend.database import running_matches, scheduled_matches, ended_matches
+from backend.match_publishers.football.init import schedule_match, choose_teams, change_availability
 
-from Livescore.backend.match_publishers.football.db_interactions import create_match, update_match
-from Livescore.backend.match_publishers.football.match_events import goal, foul
+from backend.match_publishers.football.db_interactions import create_match, update_match
+from backend.match_publishers.football.match_events import goal, foul
 
 
 # Istanza della partita

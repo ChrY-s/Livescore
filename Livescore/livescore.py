@@ -1,4 +1,4 @@
-from frontend.server import main as main_frontend
+from server import main as main_frontend
 from backend.match_publishers.football.runner import main as main_backend
 import asyncio
 

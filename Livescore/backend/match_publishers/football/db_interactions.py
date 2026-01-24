@@ -1,4 +1,4 @@
-from Livescore.backend.database import running_matches, scheduled_matches
+from backend.database import running_matches, scheduled_matches
 
 
 # -------- INTERAZIONI COL DB --------
